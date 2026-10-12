@@ -17,6 +17,7 @@
 --     possam citar "reserva 32", "usuario 11" etc.
 -- =============================================================================
 
+SET NAMES utf8mb4;   -- comunicacao em UTF-8, independente do terminal
 USE jogga;
 
 -- -----------------------------------------------------------------------------

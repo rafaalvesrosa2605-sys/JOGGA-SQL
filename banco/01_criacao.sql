@@ -22,6 +22,10 @@
 -- Notas de portabilidade para PostgreSQL estao marcadas com [PG].
 -- =============================================================================
 
+-- Garante que o cliente envie os comandos em UTF-8, qualquer que seja o
+-- charset do terminal (no Windows o console usa cp850 por padrao).
+SET NAMES utf8mb4;
+
 DROP DATABASE IF EXISTS jogga;
 
 -- utf8mb4 armazena qualquer caractere Unicode (acentos, cedilha e ate emoji nos

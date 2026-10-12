@@ -9,6 +9,7 @@
 -- ROLLBACK, para nao alterar os dados usados pelo 05_testes.sql.
 -- =============================================================================
 
+SET NAMES utf8mb4;   -- comunicacao em UTF-8, independente do terminal
 USE jogga;
 
 -- -----------------------------------------------------------------------------

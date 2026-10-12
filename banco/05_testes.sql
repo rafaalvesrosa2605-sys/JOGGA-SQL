@@ -15,6 +15,7 @@
 -- repetir os testes do zero, rode novamente 01, 02 e 03.
 -- =============================================================================
 
+SET NAMES utf8mb4;   -- comunicacao em UTF-8, independente do terminal
 USE jogga;
 SET @id_usuario_app = 2;   -- os comandos sao feitos "pela recepcao" (Paulo)
 

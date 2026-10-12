@@ -13,6 +13,7 @@
 --      chamam uma FUNCTION ... RETURNS trigger (PL/pgSQL).
 -- =============================================================================
 
+SET NAMES utf8mb4;   -- comunicacao em UTF-8, independente do terminal
 USE jogga;
 
 DROP VIEW      IF EXISTS vw_agenda_do_dia;
