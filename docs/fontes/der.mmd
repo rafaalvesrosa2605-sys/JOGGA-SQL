@@ -1,0 +1,126 @@
+erDiagram
+    USUARIO ||--o{ RESERVA : "faz"
+    USUARIO ||--o{ PARTICIPANTE_RESERVA : "participa"
+    USUARIO ||--o{ LISTA_ESPERA : "aguarda"
+    USUARIO ||--o{ MENSALISTA : "contrata"
+    QUADRA ||--o{ QUADRA_MODALIDADE : "oferece"
+    MODALIDADE ||--o{ QUADRA_MODALIDADE : "praticada em"
+    QUADRA_MODALIDADE ||--o{ RESERVA : "define o esporte de"
+    QUADRA ||--o{ RESERVA : "recebe"
+    QUADRA ||--o{ HORARIO_FUNCIONAMENTO : "abre em"
+    QUADRA ||--o{ TABELA_PRECO : "tem precos"
+    QUADRA ||--o{ LISTA_ESPERA : "tem fila"
+    QUADRA ||--o{ MENSALISTA : "tem horario fixo"
+    RESERVA ||--o{ PARTICIPANTE_RESERVA : "dividida em"
+    RESERVA ||--o{ PAGAMENTO : "paga por"
+    RESERVA ||--o| AVALIACAO : "avaliada por"
+
+    USUARIO {
+        int id_usuario PK
+        varchar nome
+        char cpf UK
+        varchar email UK
+        varchar telefone
+        varchar senha_hash
+        enum perfil "CLIENTE, RECEPCAO, ADMIN"
+        datetime aceite_lgpd
+        datetime criado_em
+    }
+    MODALIDADE {
+        smallint id_modalidade PK
+        varchar nome UK
+    }
+    QUADRA {
+        smallint id_quadra PK
+        varchar nome UK
+        varchar tipo_piso
+        boolean coberta
+        tinyint capacidade
+        boolean ativa
+    }
+    QUADRA_MODALIDADE {
+        smallint id_quadra PK, FK
+        smallint id_modalidade PK, FK
+    }
+    HORARIO_FUNCIONAMENTO {
+        smallint id_quadra PK, FK
+        tinyint dia_semana PK "1 a 7"
+        time hora_abertura
+        time hora_fechamento
+    }
+    TABELA_PRECO {
+        int id_preco PK
+        smallint id_quadra FK
+        tinyint dia_semana
+        time hora_inicio
+        time hora_fim
+        decimal valor_hora
+    }
+    RESERVA {
+        int id_reserva PK
+        int id_usuario FK
+        smallint id_quadra FK
+        smallint id_modalidade FK
+        date data_reserva
+        time hora_inicio
+        time hora_fim
+        enum status
+        decimal valor_total
+        datetime criado_em
+        datetime atualizado_em
+        time hora_bloqueada UK "gerada"
+    }
+    PARTICIPANTE_RESERVA {
+        int id_reserva PK, FK
+        int id_usuario PK, FK
+        decimal valor_cota
+        enum status_pagamento
+        datetime pago_em
+    }
+    PAGAMENTO {
+        int id_pagamento PK
+        int id_reserva FK
+        enum forma "PIX, CARTAO, DINHEIRO"
+        decimal valor
+        enum status
+        datetime pago_em
+        datetime criado_em
+    }
+    LISTA_ESPERA {
+        int id_espera PK
+        int id_usuario FK
+        smallint id_quadra FK
+        date data_reserva
+        time hora_inicio
+        smallint posicao
+        enum status
+        datetime notificado_em
+        datetime criado_em
+    }
+    MENSALISTA {
+        int id_mensalista PK
+        int id_usuario FK
+        smallint id_quadra FK
+        tinyint dia_semana
+        time hora_inicio
+        date data_inicio
+        date data_fim
+        boolean ativo
+        time hora_bloqueada UK "gerada"
+    }
+    AVALIACAO {
+        int id_avaliacao PK
+        int id_reserva FK, UK
+        tinyint nota "1 a 5"
+        varchar comentario
+        datetime criado_em
+    }
+    LOG_AUDITORIA {
+        bigint id_log PK
+        varchar tabela
+        int id_registro
+        varchar acao
+        int id_usuario "sem FK"
+        datetime data_hora
+        json detalhes
+    }
