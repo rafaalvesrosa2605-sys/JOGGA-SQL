@@ -47,7 +47,7 @@ USE jogga;
 --              (no codigo C: PERFIL_ADMIN)
 -- Por que guardar senha_hash e nao a senha: se o banco vazar, o atacante nao
 -- descobre as senhas (o hash bcrypt nao pode ser revertido). Isso corrige a
--- limitacao citada em docs/arquitetura.md (senha em texto puro nos .dat).
+-- limitacao do prototipo em C (senha em texto puro nos arquivos .dat).
 -- aceite_lgpd registra QUANDO o titular consentiu com o tratamento dos dados
 -- (LGPD, art. 8o: o controlador deve conseguir provar o consentimento).
 -- -----------------------------------------------------------------------------

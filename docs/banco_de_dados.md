@@ -10,7 +10,7 @@ Este documento cobre a **Etapa 4 do PIM II** (Modelagem de Banco de Dados e NoSQ
 | [`04_consultas.sql`](../banco/04_consultas.sql) | 14 consultas comentadas + exemplos de `INSERT`/`UPDATE`/`DELETE` |
 | [`05_testes.sql`](../banco/05_testes.sql) | comandos que devem falhar e comandos que devem passar |
 
-> **Relação com o código em C.** O protótipo em C grava em arquivos `.dat` (camada de repositório). O banco relacional é a evolução natural prevista em [`arquitetura.md`](arquitetura.md): só a camada de repositório mudaria. As mesmas regras aparecem nos dois lugares: `validar_conflito()` ↔ `UNIQUE uk_reserva_horario`; `validar_horario()` ↔ `CHECK ck_reserva_inicio`; `validar_data()` ↔ validação em `sp_reservar`. As mensagens de erro da procedure são as mesmas de `src/servico/erros.c`.
+> **Relação com o código em C.** O protótipo em C grava em arquivos `.dat` (camada de repositório). O banco relacional é a evolução natural prevista na arquitetura em camadas do protótipo: só a camada de repositório mudaria. As mesmas regras aparecem nos dois lugares: `validar_conflito()` ↔ `UNIQUE uk_reserva_horario`; `validar_horario()` ↔ `CHECK ck_reserva_inicio`; `validar_data()` ↔ validação em `sp_reservar`. As mensagens de erro da procedure são as mesmas do módulo `erros.c` do protótipo.
 
 ---
 
