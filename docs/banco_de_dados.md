@@ -58,6 +58,12 @@ Segundo Elmasri e Navathe (2018), o modelo conceitual descreve os dados em alto 
 
 ## 2. Diagrama Entidade-Relacionamento (DER)
 
+**DER conceitual** (entidades e cardinalidades; é a Figura 7 do trabalho escrito). Fonte editável: [`fontes/der_conceitual.svg`](fontes/der_conceitual.svg).
+
+![DER conceitual do JOGGA](der_conceitual.png)
+
+**DER completo** (com atributos e chaves):
+
 Notação pé-de-galinha (Crow's Foot): `||` = exatamente um, `o{` = zero ou muitos, `o|` = zero ou um. PK = chave primária, FK = chave estrangeira, UK = única.
 
 ![DER do JOGGA](der.png)
