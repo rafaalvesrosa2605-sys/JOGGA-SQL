@@ -1,50 +1,36 @@
 # JOGGA-SQL - Banco de dados do sistema de agendamento de quadras
 
-Banco de dados relacional do **JOGGA**, sistema de agendamento de quadras da Arena Meio-Campo Esportes (organização fictícia com 5 quadras). Projeto em grupo do **PIM II** do curso de Análise e Desenvolvimento de Sistemas da **UNIP**, Etapa 4: Modelagem de Banco de Dados e NoSQL.
+Banco de dados do **JOGGA**, sistema de agendamento de quadras da Arena Meio-Campo Esportes (organização fictícia com 5 quadras). Projeto em grupo do **PIM II** do curso de Análise e Desenvolvimento de Sistemas da **UNIP**, Etapa 4: Modelagem de Banco de Dados e NoSQL.
 
-- **SGBD:** MySQL 8 (testado no 8.4 LTS), InnoDB, utf8mb4
-- **Perfis:** cliente, recepção e administrador
-- **Regra principal:** nunca existem duas reservas na mesma quadra, no mesmo dia e horário. O próprio banco garante isso com um `UNIQUE` sobre uma coluna gerada, que ignora reservas canceladas: o horário de uma reserva cancelada pode ser reservado de novo.
-- **Funcionamento:** das 08h às 23h, reservas de 1 hora (último início às 22h)
+- **SGBD:** MySQL 8
+- **7 tabelas:** usuario, modalidade, quadra, quadra_modalidade, reserva, pagamento e avaliacao
+- **Regra principal:** nunca existem duas reservas na mesma quadra, no mesmo dia e horário. Quem garante isso é o próprio banco, e uma reserva cancelada libera o horário.
+- **Funcionamento:** das 08h às 23h, com reservas de 1 hora (o último horário começa às 22h)
 
-![DER](docs/der.png)
+![DER](docs/der_conceitual.png)
 
-## Conteúdo
+## Arquivos
 
-| Arquivo | O que faz |
+| Arquivo | O que tem |
 |---|---|
-| [`banco/01_criacao.sql`](banco/01_criacao.sql) | apaga e recria o banco `jogga` com 13 tabelas, chaves, `CHECK` e índices |
-| [`banco/02_dados_exemplo.sql`](banco/02_dados_exemplo.sql) | dados de exemplo: 15 usuários, 5 quadras, 42 reservas etc. (datas relativas ao dia de hoje) |
-| [`banco/03_views_triggers_procedures.sql`](banco/03_views_triggers_procedures.sql) | 3 views, 6 triggers, função `fn_valor_hora` e procedure `sp_reservar` |
-| [`banco/04_consultas.sql`](banco/04_consultas.sql) | 14 consultas comentadas e exemplos de INSERT, UPDATE e DELETE |
-| [`banco/05_testes.sql`](banco/05_testes.sql) | testes: comandos que devem falhar e comandos que devem passar |
-| [`docs/banco_de_dados.md`](docs/banco_de_dados.md) | modelo conceitual, DER, modelo lógico, normalização (1FN a 3FN), dicionário de dados e NoSQL (Redis e MongoDB) |
+| [`banco/jogga.sql`](banco/jogga.sql) | criação das tabelas, dados de exemplo, view, 8 consultas e exemplos de INSERT, UPDATE e DELETE |
+| [`banco/jogga_testes.sql`](banco/jogga_testes.sql) | testes das regras: 4 comandos que devem dar erro e 1 que deve funcionar |
+| [`docs/banco_de_dados.md`](docs/banco_de_dados.md) | modelo conceitual, DER, modelo lógico, normalização (1FN a 3FN), dicionário de dados e NoSQL |
 
-## Como executar
+## Como executar (MySQL Workbench)
 
-Rode os scripts **na ordem**. O script 01 **apaga** o banco `jogga` se ele existir; para refazer os testes do zero, rode de novo 01, 02 e 03.
+1. Abra o `banco/jogga.sql` (*File > Open SQL Script*), ou copie e cole o conteúdo dele em uma aba de query.
+2. Execute tudo com o raio ⚡ (`Ctrl+Shift+Enter`).
+3. Para os testes, abra o `banco/jogga_testes.sql` e execute **um comando por vez** (cursor na linha + `Ctrl+Enter`). Os 4 primeiros dão erro de propósito: é o banco recusando dados inválidos.
 
-**MySQL Workbench**
-
-1. Conecte no servidor e abra cada script em *File > Open SQL Script*, na ordem da tabela acima.
-2. Execute o script inteiro com o raio (*Execute*, `Ctrl+Shift+Enter`).
-3. No `05_testes.sql` os erros são esperados: desmarque *Query > Stop Script Execution on Errors* antes de executar (ou rode teste por teste com `Ctrl+Enter`).
-
-**Linha de comando** (dentro da pasta `banco/`)
+Pela linha de comando:
 
 ```
-mysql -u root -p < 01_criacao.sql
-mysql -u root -p < 02_dados_exemplo.sql
-mysql -u root -p < 03_views_triggers_procedures.sql
-mysql -u root -p -t < 04_consultas.sql
-mysql -u root -p -t --force < 05_testes.sql
+mysql -u root -p < banco/jogga.sql
+mysql -u root -p --force < banco/jogga_testes.sql
 ```
 
-`--force` faz o cliente continuar depois dos erros esperados do script 05.
-
-## PostgreSQL
-
-Os comentários marcados com `[PG]` nos scripts indicam o que trocar para rodar no PostgreSQL. A tabela de equivalências está no final de [`docs/banco_de_dados.md`](docs/banco_de_dados.md).
+O script apaga e recria o banco `jogga`. Para voltar aos dados iniciais, basta rodar o `jogga.sql` de novo.
 
 ---
 
